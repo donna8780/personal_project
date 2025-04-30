@@ -1,6 +1,6 @@
 package com.mediation.homepage.domain.request.service.create;
 
-import com.mediation.homepage.domain.request.dto.RequestReqDto;
+import com.mediation.homepage.domain.request.dto.req.RequestReqDto;
 import com.mediation.homepage.domain.request.entity.Request;
 import com.mediation.homepage.domain.request.mapper.RequestMapper;
 import lombok.RequiredArgsConstructor;

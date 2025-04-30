@@ -1,4 +1,4 @@
-package com.mediation.homepage.domain.request.dto;
+package com.mediation.homepage.domain.request.dto.req;
 
 import com.mediation.homepage.domain.request.entity.Request;
 import lombok.Data;

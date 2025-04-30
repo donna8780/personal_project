@@ -1,5 +1,6 @@
 package com.mediation.homepage.domain.request.mapper;
 
+import com.mediation.homepage.domain.request.dto.resp.requestRespDto;
 import com.mediation.homepage.domain.request.entity.Request;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,5 +15,10 @@ public interface RequestMapper {
     //의뢰 상세 조회
     //xml 파일 안에서 #{id}로 사용할 수 있게, 이 파라미터의 이름을 'id'로 지정
     Request findRequestById(@Param("requestId") Long requestId);
+
+    //의뢰 수정
+    int updateRequestById(@Param("requestId") Long requestId, @Param("respdto") requestRespDto respdto);
+    //의뢰 삭제
+    void deleteRequestById(@Param("requestId") Long requestId);
 
 }

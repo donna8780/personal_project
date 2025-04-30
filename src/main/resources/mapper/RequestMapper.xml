@@ -17,6 +17,7 @@
         <result property="deadline" column="deadline"/>
     </resultMap>
 
+
     <insert id="createRequest" parameterType="com.mediation.homepage.domain.request.entity.Request">
         INSERT INTO request(title, description, budget, status, deadline, created_at, updated_at)
         VALUES (#{title}, #{description}, #{budget}, #{status}, #{deadline}, NOW(), NOW())
@@ -25,5 +26,22 @@
     <select id="findRequestById" resultMap="requestResultMap">
         SELECT * FROM request WHERE id = #{requestId}
     </select>
+
+    <delete id="deleteRequestById">
+        DELETE FROM request WHERE id = #{requestId}
+    </delete>
+
+    <update id ="updateRequestById" parameterType="map">
+        UPDATE request
+        SET
+            title = #{respdto.title},
+            description = #{respdto.description},
+            budget = #{respdto.budget},
+            deadline = #{respdto.deadline},
+            updated_at = NOW()
+        WHERE id = #{requestId}
+    </update>
+
+
 
 </mapper>
