@@ -17,13 +17,82 @@
         <result property="deadline" column="deadline"/>
     </resultMap>
 
+    <!-- 의뢰 등록 -->
     <insert id="createRequest" parameterType="com.mediation.homepage.domain.request.entity.Request">
         INSERT INTO request(title, description, budget, status, deadline, created_at, updated_at)
         VALUES (#{title}, #{description}, #{budget}, #{status}, #{deadline}, NOW(), NOW())
     </insert>
 
+    <!-- 의뢰 상세 조회 -->
     <select id="findRequestById" resultMap="requestResultMap">
         SELECT * FROM request WHERE id = #{requestId}
     </select>
 
+    <delete id="deleteRequestById">
+        DELETE FROM request WHERE id = #{requestId}
+    </delete>
+
+    <!-- 의뢰 수정 -->
+    <update id ="updateRequestById" parameterType="map">
+        UPDATE request
+        SET
+            title = #{respdto.title},
+            description = #{respdto.description},
+            budget = #{respdto.budget},
+            deadline = #{respdto.deadline},
+            updated_at = NOW()
+        WHERE id = #{requestId}
+    </update>
+
+    <!-- 의뢰 목록 조회 (페이징 + 검색 + 정렬 포함) -->
+    <select id="findAllRequests" resultMap="requestResultMap">
+        SELECT * FROM request
+        <where>
+            <if test="keyword != null and keyword != ''">
+               <choose>
+                   <when test="searchType == 'title'">
+                       AND title LIKE CONCAT('%', #{keyword}, '%')
+                   </when>
+                 <when test="searchType == 'content'">
+                     AND description LIKE CONCAT('%', #{keyword}, '%')
+                 </when>
+                 <when test="searchType == 'title_content'">
+                     AND (title LIKE CONCAT('%', #{keyword}, '%') OR description LIKE CONCAT('%', #{keyword}, '%'))
+                 </when>
+               </choose>
+            </if>
+        </where>
+        ORDER BY
+            <choose>
+                <when test="sortBy == 'title'"> title</when>
+                <when test="sortBy == 'created_at'">created_at</when>
+                <otherwise>created_at</otherwise>
+            </choose>
+            <choose>
+                <when test="order == 'asc'">ASC</when>
+                <otherwise>DESC</otherwise>
+            </choose>
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <!-- 의뢰 개수 카운트 (검색 조건 포함) -->
+    <select id="countRequestsWithFilter" resultType="long">
+       SELECT COUNT(*) FROM request
+       <where>
+           <if test="keyword != null and keyword != ''">
+               <choose>
+                <when test="searchType == 'title'">
+                    AND title LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="searchType == 'content'">
+                    AND description LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="searchType == 'title_content'">
+                    AND (title LIKE CONCAT('%', #{keyword}, '%')
+                    OR description LIKE CONCAT('%', #{keyword}, '%'))
+                </when>
+               </choose>
+           </if>
+       </where>
+    </select>
 </mapper>
