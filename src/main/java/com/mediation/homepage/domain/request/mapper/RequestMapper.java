@@ -1,9 +1,11 @@
 package com.mediation.homepage.domain.request.mapper;
 
-import com.mediation.homepage.domain.request.dto.resp.requestRespDto;
+import com.mediation.homepage.domain.request.dto.resp.RequestRespDto;
 import com.mediation.homepage.domain.request.entity.Request;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface RequestMapper {
@@ -16,9 +18,21 @@ public interface RequestMapper {
     //xml 파일 안에서 #{id}로 사용할 수 있게, 이 파라미터의 이름을 'id'로 지정
     Request findRequestById(@Param("requestId") Long requestId);
 
+    //의뢰 목록 조회 (페이징, 검색, 정렬 포함)
+    List<Request> findAllRequests(@Param("offset") int offset,
+                                  @Param("size") int size,
+                                  @Param("searchType" )String searchType,
+                                  @Param("keyword") String keyword,
+                                  @Param("sortBy") String sortBy,
+                                  @Param("order") String order);
+
+    //필터링 조건으로 의뢰 개수 반환
+    long countRequestsWithFilter(@Param("searchType") String searchType,
+            @Param("keyword")String keyword);
+
     //의뢰 수정
-    int updateRequestById(@Param("requestId") Long requestId, @Param("respdto") requestRespDto respdto);
+    int updateRequestById(@Param("requestId") Long requestId, @Param("respdto") RequestRespDto respdto);
+
     //의뢰 삭제
     void deleteRequestById(@Param("requestId") Long requestId);
-
 }
