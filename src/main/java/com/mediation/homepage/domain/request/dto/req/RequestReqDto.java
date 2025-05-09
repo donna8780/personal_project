@@ -1,5 +1,6 @@
 package com.mediation.homepage.domain.request.dto.req;
 
+import com.mediation.homepage.domain.request.status.RequestStatus;
 import com.mediation.homepage.domain.request.entity.Request;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class RequestReqDto {
         request.setTitle(this.title);
         request.setDescription(this.description);
         request.setBudget(this.budget);
-        request.setStatus("대기");
+        request.setStatus(RequestStatus.PENDING);
         request.setDeadline(this.deadline);
         request.setCreatedAt(LocalDateTime.now());
         request.setUpdatedAt(LocalDateTime.now());

@@ -1,6 +1,7 @@
 package com.mediation.homepage.domain.request.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mediation.homepage.domain.request.status.RequestStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class Request {
     private String title; //제목
     private String description; //상세 설명
     private Double budget; //예산
-    private String status; //상태(대기 중, 진행 중, 완료)
+    private RequestStatus status;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt; //의뢰 작성 일시
     private LocalDateTime updatedAt; //의뢰 수정 일시

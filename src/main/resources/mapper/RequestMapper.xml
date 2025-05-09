@@ -11,16 +11,24 @@
         <result property="title" column="title"/>
         <result property="description" column="description"/>
         <result property="budget" column="budget"/>
-        <result property="status" column="status"/>
+        <result property="status" column="status" javaType="com.mediation.homepage.domain.request.status.RequestStatus"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
         <result property="deadline" column="deadline"/>
     </resultMap>
 
     <!-- 의뢰 등록 -->
-    <insert id="createRequest" parameterType="com.mediation.homepage.domain.request.entity.Request">
+    <insert id="createRequest" parameterType="com.mediation.homepage.domain.request.entity.Request"
+    useGeneratedKeys="true"
+    keyProperty="requestId">
         INSERT INTO request(title, description, budget, status, deadline, created_at, updated_at)
-        VALUES (#{title}, #{description}, #{budget}, #{status}, #{deadline}, NOW(), NOW())
+        VALUES (#{title},
+                #{description},
+                #{budget},
+                #{status,typeHandler=com.mediation.homepage.global.typehandler.RequestStatusTypeHandler},
+                #{deadline},
+                NOW(),
+                #{updatedAt})
     </insert>
 
     <!-- 의뢰 상세 조회 -->
@@ -33,14 +41,15 @@
     </delete>
 
     <!-- 의뢰 수정 -->
-    <update id ="updateRequestById" parameterType="map">
+    <update id ="updateRequestById" parameterType="com.mediation.homepage.domain.request.dto.resp.RequestRespDto">
         UPDATE request
         SET
             title = #{respdto.title},
             description = #{respdto.description},
             budget = #{respdto.budget},
             deadline = #{respdto.deadline},
-            updated_at = NOW()
+            status = #{respdto.status, typeHandler=com.mediation.homepage.global.typehandler.RequestStatusTypeHandler},
+            updated_at = NOW() <!-- status 추가 -->
         WHERE id = #{requestId}
     </update>
 
