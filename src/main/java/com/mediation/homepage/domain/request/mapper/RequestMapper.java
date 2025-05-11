@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface RequestMapper {
 
+    boolean existsByRequestId(@Param("requestId") Long requestId);
     //Request객체를 받아서 db에 새로 insert하는 메서드
     //xml 파일안에서 #{request.title}처럼 request 객체의 필드를 접근할 수 있게 이름을 지정
     void createRequest(Request request);

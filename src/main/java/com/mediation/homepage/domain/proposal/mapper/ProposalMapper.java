@@ -6,5 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ProposalMapper {
+
     void createProposal(Proposal proposal);
+
+    boolean existsProposal(Long proposalId);
+    void deleteProposal(Long proposalId);
 }

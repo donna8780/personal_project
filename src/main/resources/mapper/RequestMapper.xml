@@ -31,6 +31,12 @@
                 #{updatedAt})
     </insert>
 
+    <!--의뢰 존재 조회 -->
+    <select id="existsByRequestId" resultType="boolean" parameterType="long">
+        SELECT COUNT(*) > 0
+        FROM request
+        WHERE id = #{requestId}
+    </select>
     <!-- 의뢰 상세 조회 -->
     <select id="findRequestById" resultMap="requestResultMap">
         SELECT * FROM request WHERE id = #{requestId}

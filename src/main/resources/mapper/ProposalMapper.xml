@@ -21,4 +21,15 @@
         (#{proposalId}, #{requestId}, #{message}, #{proposalBudget}, #{status}, #{createdAt}, #{updatedAt})
     </insert>
 
+    <select id = "existsProposal" parameterType="java.lang.Long" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM proposal
+        WHERE proposal_id = #{proposalId}
+    </select>
+
+    <delete id="deleteProposal">
+        DELETE FROM proposal
+        WHERE proposal_id = #{proposalId}
+    </delete>
+
 </mapper>
