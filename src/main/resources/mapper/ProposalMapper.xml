@@ -32,4 +32,9 @@
         WHERE proposal_id = #{proposalId}
     </delete>
 
+    <select id="findProposalById" parameterType="long" resultMap="proposalResultMap">
+        SELECT * FROM proposal
+        WHERE proposal_id = #{proposalId}
+    </select>
+
 </mapper>
